@@ -24,9 +24,11 @@ own.
 - 🚧 **Safe by design:** mail delivery is disabled and a staging banner is
   shown, so the copy can never be mistaken for the live shop.
 - 🔒 **Optional password protection** (`--protect`): an elegant animated
-  login page guards the staging, with brute-force lockout, path exemptions
-  for APIs or health checks, and a password that survives rebuilds. Forgot
-  it? `--reset-password` issues a new one in seconds.
+  login page guards the staging, with path exemptions for APIs or health
+  checks and a password that survives rebuilds. This is real protection, not
+  a flimsy `.htaccess` prompt: passwords are stored only as salted hashes,
+  and repeated wrong attempts lock the client out automatically. Forgot the
+  password? `--reset-password` issues a new one in seconds.
 - 🕵️ **GDPR anonymization** (`--anonymize`): customer data is anonymized and
   generated documents (invoices etc.) are removed from the copy. Perfect for
   third parties: you can safely let external agencies work on this staging.

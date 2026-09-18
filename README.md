@@ -7,7 +7,11 @@ by each tool's built-in auto-update.
 
 `create-staging` builds a complete staging copy of a Shopware 6 shop. It ships
 as a **single binary**: nothing to install, no setup, no dependencies of its
-own. It runs exclusively on servers hosted by enerSpace.
+own.
+
+> ⚠️ **Important:** `create-staging` runs **exclusively on enerSpace
+> infrastructure**. Each run verifies the server against our license service;
+> on servers outside enerSpace hosting the tool refuses to start.
 
 ### What it does
 

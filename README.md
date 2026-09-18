@@ -9,6 +9,42 @@ by each tool's built-in auto-update.
 as a **single binary** — nothing to install, no setup, no dependencies of its
 own. It runs exclusively on servers hosted by enerSpace.
 
+### What it does
+
+- ⚡ **Fast and storage-friendly** — media files are hardlinked instead of
+  copied: a staging appears in minutes and its media takes up (almost) no
+  extra disk space.
+- 🗃️ **Full database copy** — the live database is dumped and imported into a
+  separate staging database; shop URLs are rewritten to the staging sub-path
+  and the shop gets a fresh identity.
+- 🚧 **Safe by design** — mail delivery is disabled and a staging banner is
+  shown, so the copy can never be mistaken for the live shop.
+- 🔒 **Optional password protection** (`--protect`) — an elegant animated
+  login page guards the staging, with brute-force lockout, path exemptions
+  for APIs or health checks, and a password that survives rebuilds. Forgot
+  it? `--reset-password` issues a new one in seconds.
+- 🕵️ **GDPR anonymization** (`--anonymize`) — customer data is anonymized and
+  generated documents (invoices etc.) are removed from the copy.
+- 🔄 **Self-updating** — checks for a newer version on every run and updates
+  itself before starting.
+- 🖥️ **Clean output** — a live progress UI on terminals, plain logs for
+  cron/CI.
+
+### Options at a glance
+
+| Option | Description |
+|--------|-------------|
+| `--protect` | Password-protect the staging front end |
+| `--protect-allow=<path>` | Paths reachable without password (e.g. `/api`), repeatable |
+| `--reset-password <SRC>` | New password for an existing staging — no rebuild |
+| `--anonymize` | GDPR: anonymize customer data, drop generated documents |
+| `--maintenance` | Put the staging into Shopware maintenance mode |
+| `--media=link\|copy` | Hardlink media (default) or copy it for real |
+| `--db-host` / `--db-port` | Staging database connection (default `127.0.0.1:3306`) |
+| `--ui=auto\|rich\|plain` | Output style (TUI vs. plain logs) |
+
+Run `./create-staging --help` for the full, always-current list.
+
 **Requirements**
 
 - Linux server (x86_64) on enerSpace hosting, reachable via SSH

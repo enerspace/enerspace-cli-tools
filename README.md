@@ -3,19 +3,20 @@
 Public distribution channel for enerSpace command-line tool binaries, consumed
 by each tool's built-in auto-update.
 
-## create-staging installieren (Deployment)
+## Installing create-staging (deployment)
 
-`create-staging` erstellt eine vollständige Staging-Kopie eines Shopware-6-Shops.
-Es besteht aus **einer einzigen Binärdatei** – keine Abhängigkeits-Installation,
-kein Setup. Es läuft ausschließlich auf Servern im enerSpace-Hosting.
+`create-staging` builds a complete staging copy of a Shopware 6 shop. It ships
+as a **single binary** — nothing to install, no setup, no dependencies of its
+own. It runs exclusively on servers hosted by enerSpace.
 
-**Voraussetzungen**
+**Requirements**
 
-- Linux-Server (x86_64) im enerSpace-Hosting, Zugriff per SSH
-- Auf dem Server vorhanden: `mariadb-dump`, `mysql`, `rsync`, `zstd`, `php`
-  (das Tool prüft das selbst beim Start und meldet, was ggf. fehlt)
+- Linux server (x86_64) on enerSpace hosting, reachable via SSH
+- Present on the server: `mariadb-dump`, `mysql`, `rsync`, `zstd`, `php`
+  (the tool checks for these on startup and tells you if anything is missing)
 
-**Installation** – per SSH im gewünschten Verzeichnis (z. B. dem Home-Verzeichnis):
+**Installation** — via SSH, in a directory of your choice (e.g. your home
+directory):
 
 ```bash
 curl -4 -L -o create-staging \
@@ -24,26 +25,27 @@ chmod +x create-staging
 ./create-staging --version
 ```
 
-Das `-4` ist wichtig: der GitHub-Download ist nur über IPv4 erreichbar.
-Eine bestimmte Version gibt es alternativ versionsgenau unter
+The `-4` matters: the GitHub download is reachable over IPv4 only.
+A specific version can be pinned via
 `releases/download/create-staging-v<VERSION>/create-staging-linux-amd64`.
 
-**Verwendung**
+**Usage**
 
 ```bash
 ./create-staging --help
-./create-staging --protect httpdocs/ shop_staging staging_user 'DB_PASSWORT'
+./create-staging --protect httpdocs/ shop_staging staging_user 'DB_PASSWORD'
 ```
 
-Alle Optionen (Passwortschutz, DSGVO-Anonymisierung, Wartungsmodus, …) zeigt
-`--help`.
+`--help` lists every option — password protection, GDPR anonymization,
+maintenance mode, generating a fresh staging password with
+`--reset-password`, and more.
 
 **Updates**
 
-Einmal installieren genügt: Das Tool prüft bei jedem echten Lauf auf eine
-neuere Version und aktualisiert sich selbst, bevor es losläuft. Was sich
-geändert hat, steht in der
-[Versionsübersicht](https://github.com/enerspace/enerspace-cli-tools/releases).
+Install once and you are done: on every real run the tool checks for a newer
+version and updates itself before doing any work. See the
+[release history](https://github.com/enerspace/enerspace-cli-tools/releases)
+for what changed in each version.
 
 ---
 

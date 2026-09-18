@@ -24,7 +24,8 @@ own. It runs exclusively on servers hosted by enerSpace.
   for APIs or health checks, and a password that survives rebuilds. Forgot
   it? `--reset-password` issues a new one in seconds.
 - 🕵️ **GDPR anonymization** (`--anonymize`): customer data is anonymized and
-  generated documents (invoices etc.) are removed from the copy.
+  generated documents (invoices etc.) are removed from the copy. Perfect for
+  third parties: you can safely let external agencies work on this staging.
 - 🔄 **Self-updating:** checks for a newer version on every run and updates
   itself before starting.
 - 🖥️ **Clean output:** a live progress UI on terminals, plain logs for

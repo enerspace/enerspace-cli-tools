@@ -6,28 +6,28 @@ by each tool's built-in auto-update.
 ## Installing create-staging (deployment)
 
 `create-staging` builds a complete staging copy of a Shopware 6 shop. It ships
-as a **single binary** — nothing to install, no setup, no dependencies of its
+as a **single binary**: nothing to install, no setup, no dependencies of its
 own. It runs exclusively on servers hosted by enerSpace.
 
 ### What it does
 
-- ⚡ **Fast and storage-friendly** — media files are hardlinked instead of
-  copied: a staging appears in minutes and its media takes up (almost) no
+- ⚡ **Fast and storage-friendly:** media files are hardlinked instead of
+  copied. A staging appears in minutes and its media takes up (almost) no
   extra disk space.
-- 🗃️ **Full database copy** — the live database is dumped and imported into a
+- 🗃️ **Full database copy:** the live database is dumped and imported into a
   separate staging database; shop URLs are rewritten to the staging sub-path
   and the shop gets a fresh identity.
-- 🚧 **Safe by design** — mail delivery is disabled and a staging banner is
+- 🚧 **Safe by design:** mail delivery is disabled and a staging banner is
   shown, so the copy can never be mistaken for the live shop.
-- 🔒 **Optional password protection** (`--protect`) — an elegant animated
+- 🔒 **Optional password protection** (`--protect`): an elegant animated
   login page guards the staging, with brute-force lockout, path exemptions
   for APIs or health checks, and a password that survives rebuilds. Forgot
   it? `--reset-password` issues a new one in seconds.
-- 🕵️ **GDPR anonymization** (`--anonymize`) — customer data is anonymized and
+- 🕵️ **GDPR anonymization** (`--anonymize`): customer data is anonymized and
   generated documents (invoices etc.) are removed from the copy.
-- 🔄 **Self-updating** — checks for a newer version on every run and updates
+- 🔄 **Self-updating:** checks for a newer version on every run and updates
   itself before starting.
-- 🖥️ **Clean output** — a live progress UI on terminals, plain logs for
+- 🖥️ **Clean output:** a live progress UI on terminals, plain logs for
   cron/CI.
 
 ### Options at a glance
@@ -36,7 +36,7 @@ own. It runs exclusively on servers hosted by enerSpace.
 |--------|-------------|
 | `--protect` | Password-protect the staging front end |
 | `--protect-allow=<path>` | Paths reachable without password (e.g. `/api`), repeatable |
-| `--reset-password <SRC>` | New password for an existing staging — no rebuild |
+| `--reset-password <SRC>` | New password for an existing staging, no rebuild |
 | `--anonymize` | GDPR: anonymize customer data, drop generated documents |
 | `--maintenance` | Put the staging into Shopware maintenance mode |
 | `--media=link\|copy` | Hardlink media (default) or copy it for real |
@@ -51,7 +51,7 @@ Run `./create-staging --help` for the full, always-current list.
 - Present on the server: `mariadb-dump`, `mysql`, `rsync`, `zstd`, `php`
   (the tool checks for these on startup and tells you if anything is missing)
 
-**Installation** — via SSH, in a directory of your choice (e.g. your home
+**Installation** via SSH, in a directory of your choice (e.g. your home
 directory):
 
 ```bash
@@ -72,7 +72,7 @@ A specific version can be pinned via
 ./create-staging --protect httpdocs/ shop_staging staging_user 'DB_PASSWORD'
 ```
 
-`--help` lists every option — password protection, GDPR anonymization,
+`--help` lists every option: password protection, GDPR anonymization,
 maintenance mode, generating a fresh staging password with
 `--reset-password`, and more.
 
@@ -88,7 +88,7 @@ for what changed in each version.
 ## Layout
 
 - **Binaries** ship as **GitHub Release assets** (so they are *not* in the git
-  history — the repo stays small). Tag per release: `<tool>-v<version>`, asset
+  history and the repo stays small). Tag per release: `<tool>-v<version>`, asset
   `<tool>-<os>-<arch>`, e.g. release `create-staging-v1.5.2`, asset
   `create-staging-linux-amd64`.
 - **`<tool>/version.json`** (committed, tiny) holds the latest `{version, sha256}`.
@@ -113,7 +113,7 @@ Run `create-staging`'s `release.sh` (needs the `gh` CLI):
 ```
 
 It builds the hardened binary, creates the GitHub Release with the binary asset,
-and updates `create-staging/version.json` — all from the same build. No license
+and updates `create-staging/version.json`, all from the same build. No license
 server change, no restart.
 
 > Clients only auto-update from **1.5.0** on (older binaries have no update

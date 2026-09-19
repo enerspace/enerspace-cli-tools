@@ -27,6 +27,15 @@ own.
   address is `https://your-shop.com/staging`.
 - 🏷️ **As many environments as you need** (`--staging-dir=NAME`): every name
   gets the `staging-` prefix, so a staging can never hide a page of the shop.
+  Without a name, a new environment gets a random one such as
+  `/staging-a3f19c2b7d`, an address nobody can guess. An existing environment
+  keeps its address when rebuilt; `--new` always adds another one.
+- 🙈 **Invisible to search engines:** every staging serves a `robots.txt` and
+  sends an `X-Robots-Tag` header, so a test environment does not end up in
+  search results.
+- ⏱️ **Fails fast:** both database connections are verified before anything is
+  copied, reading on the source and writing on the staging database. A wrong
+  password costs seconds, not a full dump.
 - 🚚 **Move an existing staging** (`--migrate`): an older staging moves into
   the new structure in seconds, without a rebuild. Data, media and password
   protection stay as they are, only the address changes.
@@ -36,7 +45,11 @@ own.
 - 🚧 **Safe by design:** mail delivery is disabled and a staging banner is
   shown, so the copy can never be mistaken for the live shop.
 - 🔒 **Optional password protection** (`--protect`): an elegant animated
-  login page guards the staging, with path exemptions for APIs or health
+  login page guards the staging, and with the enerSpace nginx templates in
+  place it also covers files served straight from disk, so images and theme
+  files lead to the login page instead of being handed out. The web installer
+  and the recovery updater, neither of which has a login of its own, are not
+  copied into a staging at all. With path exemptions for APIs or health
   checks and a password that survives rebuilds. This is real protection, not
   a flimsy `.htaccess` prompt: passwords are stored only as salted hashes,
   and repeated wrong attempts lock the client out automatically. Forgot the
@@ -58,7 +71,8 @@ own.
 | `--reset-password <SRC>` | New password for an existing staging, no rebuild |
 | `--anonymize` | GDPR: anonymize customer data, drop generated documents |
 | `--maintenance` | Put the staging into Shopware maintenance mode |
-| `--staging-dir=NAME` | Name of the staging, served at `/staging-NAME` (default `staging`) |
+| `--staging-dir=NAME` | Name of the staging, served at `/staging-NAME` (default: a random name) |
+| `--new` | Create another staging with a random name instead of rebuilding an existing one |
 | `--migrate <SRC>` | Move an existing staging into the current layout, no rebuild |
 | `--remove [SRC]` | Remove a staging: files, link and the contents of its database |
 | `--keep-db` | With `--remove`: leave the staging database untouched |

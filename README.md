@@ -21,6 +21,18 @@ own.
 - 🗃️ **Full database copy:** the live database is dumped and imported into a
   separate staging database; shop URLs are rewritten to the staging sub-path
   and the shop gets a fresh identity.
+- 📁 **Out of the public directory:** the staging tree lives next to the
+  webroot and only its `public/` folder is linked in, so project files such as
+  keys, logs and generated documents are not reachable over the internet. The
+  address is `https://your-shop.com/staging`.
+- 🏷️ **As many environments as you need** (`--staging-dir=NAME`): every name
+  gets the `staging-` prefix, so a staging can never hide a page of the shop.
+- 🚚 **Move an existing staging** (`--migrate`): an older staging moves into
+  the new structure in seconds, without a rebuild. Data, media and password
+  protection stay as they are, only the address changes.
+- 🗑️ **Remove a staging** (`--remove`): pick one from the list and it is gone,
+  including its link and the contents of its database. Stagings created by
+  other tools are recognized and never touched by accident.
 - 🚧 **Safe by design:** mail delivery is disabled and a staging banner is
   shown, so the copy can never be mistaken for the live shop.
 - 🔒 **Optional password protection** (`--protect`): an elegant animated
@@ -46,6 +58,10 @@ own.
 | `--reset-password <SRC>` | New password for an existing staging, no rebuild |
 | `--anonymize` | GDPR: anonymize customer data, drop generated documents |
 | `--maintenance` | Put the staging into Shopware maintenance mode |
+| `--staging-dir=NAME` | Name of the staging, served at `/staging-NAME` (default `staging`) |
+| `--migrate <SRC>` | Move an existing staging into the current layout, no rebuild |
+| `--remove [SRC]` | Remove a staging: files, link and the contents of its database |
+| `--keep-db` | With `--remove`: leave the staging database untouched |
 | `--media=link\|copy` | Hardlink media (default) or copy it for real |
 | `--db-host` / `--db-port` | Staging database connection (default `127.0.0.1:3306`) |
 | `--ui=auto\|rich\|plain` | Output style (TUI vs. plain logs) |
@@ -77,11 +93,18 @@ A specific version can be pinned via
 ```bash
 ./create-staging --help
 ./create-staging --protect httpdocs/ shop_staging staging_user 'DB_PASSWORD'
+./create-staging --protect --staging-dir=agentur httpdocs/ shop_stg2 stg2_user 'DB_PASSWORD'
+./create-staging --migrate httpdocs/
+./create-staging --remove
 ```
 
 `--help` lists every option: password protection, GDPR anonymization,
 maintenance mode, generating a fresh staging password with
 `--reset-password`, and more.
+
+Upgrading from a staging created before 1.9.0? It keeps working where it is.
+`./create-staging --migrate httpdocs/` moves it into the current layout and
+tells you the new address; nothing else changes.
 
 **Updates**
 
